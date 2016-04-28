@@ -28,32 +28,15 @@
 
     });
 
-    // describe('methods', function () {
-    //   describe('newBoard', function () {
-    //     var board = new Board();
-    //     var blank = "[ ]";
-    //     board.loadMarkers();
+    describe('methods', function () {
+      describe('setMarker', function () {
+        
+        it('sets marker to position of player choice if existing is blank', function () {
+          var board = new Board();
+          board.setMarker("center", " X ");
+          expect(board.slots.center.marker).toEqual(' X ');
+        });
 
-
-    //     it('returns a string with correct pluralization for multiple doors and multiple windows', function () {
-    //       var house = new House(3,5);
-    //       expect(house.toString()).toEqual('The house has 3 doors and 5 windows');
-    //     });
-
-    //     it('returns a string with correct pluralization for 1 door and multiple windows', function () {
-    //       var house = new House(1,65);
-    //       expect(house.toString()).toEqual('The house has 1 door and 65 windows');
-    //     });
-
-    //     it('returns a string with correct pluralization for 1 door and 1 window', function () {
-    //       var house = new House(1,1);
-    //       expect(house.toString()).toEqual('The house has 1 door and 1 window');
-    //     });
-
-    //     it('returns a string with correct pluralization for 0 doors and 0 windows', function () {
-    //       var house = new House(0,0);
-    //       expect(house.toString()).toEqual('The house has 0 doors and 0 windows');
-    //     });
-      // });
-    // });
+      });
+    });
   });

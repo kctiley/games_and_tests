@@ -75,8 +75,15 @@ function Board(existingBoardSlots) {
     this.slots = currentGameSlots;
   }
 
-  
-
 }
+
+Board.prototype.setMarker = function(position, marker){
+  var slot = this.slots[position];
+  slot.marker = marker;
+};
+
+
+
+
 
   module.exports = Board;
