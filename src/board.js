@@ -1,7 +1,7 @@
-function Board(existingBoardpositions) {
+function Board(existingBoardPositions) {
   var blank = "[ ]";
 
-  if(!existingBoardpositions){
+  if(!existingBoardPositions){
     this.positions = {
                   topLeft : {marker:blank},
                   topCenter : {marker:blank},
@@ -67,12 +67,19 @@ function Board(existingBoardpositions) {
                                   left : "bottomCenter", 
                                   upLeft : "center",
                                   up : "middleRight",
-                                };             
-
-
+                                };
+    var pstns = this.positions                            
+    for (pstn in pstns){
+      var directions = ["left", "upLeft", "up", "upRight", "right", "downRight", "down", "downLeft" ]
+      directions.forEach(function(direction){
+        if(!pstns[pstn].neighbors[direction]){
+          pstns[pstn].neighbors[direction] = null;
+        }
+      })
+    }                               
   }
   else{
-    this.positions = currentGamepositions;
+    this.positions = existingBoardPositions;
   }
 
 }

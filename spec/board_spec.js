@@ -16,7 +16,7 @@ var Board = require('../src/board');
     describe('constructor', function () {
       
       it('has specific positions with no neighbor in some directions', function () {
-        expect(board.positions.topLeft.neighbors.left).toEqual(undefined);
+        expect(board.positions.topLeft.neighbors.left).toEqual(null);
       });
 
       it('has specific positions with specific neighbors', function () {
@@ -31,8 +31,12 @@ var Board = require('../src/board');
         expect(board.positions.bottomRight.marker).toEqual(blank);
       });
 
-      it('has positions with initial markers that are blank if no positions are provided', function () {
-        expect(board.positions.bottomLeft.marker).toEqual(blank);
+      it('has positions with initial markers that reflect markers of positions are provided when positions argument is used to create an instance of the board', function () {
+        var board1 = new Board();
+        board1.positions.topLeft.marker = x;
+        var board2 = new Board(board1.positions);
+
+        expect(board2.positions.topLeft.marker).toEqual(x);
       });
     });
 
