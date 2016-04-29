@@ -1,42 +1,54 @@
- var Board = require('../src/Board');
+var Board = require('../src/board');
+  var board = new Board();
+    var x;
+    var o;
+    var blank;
+
+  beforeEach(function(){
+    board = new Board();
+    x = " X ";
+    o = " O ";
+    blank = "[ ]";
+  })
 
   describe('Board', function () {
+    
     describe('constructor', function () {
-      var board = new Board();
-      var blank = "[ ]";
-
-      it('has specific slots with specific neighbors', function () {
-        expect(board.slots.topLeft.neighbors.left).toEqual(undefined);
-      });
-
-      it('has specific slots with specific neighbors', function () {
-        expect(board.slots.center.neighbors.left).toEqual(board.slots.middleLeft);
-      });
-
-      it('has specific slots with specific neighbors', function () {
-        expect(board.slots.bottomRight.neighbors.up).toEqual(board.slots.middleRight);
-      });
-
-      it('has slots with initial markers that are blank if no slots are provided', function () {
-        expect(board.slots.bottomRight.marker).toEqual(blank);
-      });
-
-      it('has slots with initial markers that are blank if no slots are provided', function () {
-        expect(board.slots.bottomLeft.marker).toEqual(blank);
-      });
       
+      it('has specific positions with no neighbor in some directions', function () {
+        expect(board.positions.topLeft.neighbors.left).toEqual(undefined);
+      });
 
+      it('has specific positions with specific neighbors', function () {
+        expect(board.positions.center.neighbors.left).toEqual("middleLeft");
+      });
+
+      it('has specific positions with specific neighbors', function () {
+        expect(board.positions.bottomRight.neighbors.up).toEqual("middleRight");
+      });
+
+      it('has positions with initial markers that are blank if no positions are provided', function () {
+        expect(board.positions.bottomRight.marker).toEqual(blank);
+      });
+
+      it('has positions with initial markers that are blank if no positions are provided', function () {
+        expect(board.positions.bottomLeft.marker).toEqual(blank);
+      });
     });
 
     describe('methods', function () {
       describe('setMarker', function () {
-        
         it('sets marker to position of player choice if existing is blank', function () {
-          var board = new Board();
-          board.setMarker("center", " X ");
-          expect(board.slots.center.marker).toEqual(' X ');
+          board.setMarker("center", x);
+          expect(board.positions.center.marker).toEqual(' X ');
         });
 
+        it('will not set marker to position of player choice if existing is not blank', function () {
+          board.setMarker("topLeft", o);
+          board.setMarker("topLeft", x);
+          expect(board.positions.topLeft.marker).toEqual(' O ');
+        });
       });
     });
+
   });

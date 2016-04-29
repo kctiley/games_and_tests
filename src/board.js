@@ -1,8 +1,8 @@
-function Board(existingBoardSlots) {
+function Board(existingBoardpositions) {
   var blank = "[ ]";
 
-  if(!existingBoardSlots){
-    this.slots = {
+  if(!existingBoardpositions){
+    this.positions = {
                   topLeft : {marker:blank},
                   topCenter : {marker:blank},
                   topRight : {marker:blank},
@@ -13,73 +13,77 @@ function Board(existingBoardSlots) {
                   middleLeft : {marker:blank},
                   center : {marker:blank},
     };
-    this.slots.topLeft.neighbors = {right : this.slots.topCenter, 
-                                    down : this.slots.middleLeft, 
-                                    downRight : this.slots.center 
+    this.positions.topLeft.neighbors = {right : "topCenter", 
+                                    down : "middleLeft", 
+                                    downRight : "center" 
                                   };
-    this.slots.topCenter.neighbors = {
-                                  left : this.slots.topLeft, 
-                                  right : this.slots.topRight, 
-                                  downRight : this.slots.middleRight,
-                                  down : this.slots.center,
-                                  downLeft : this.slots.middleLeft
+    this.positions.topCenter.neighbors = {
+                                  left : "topLeft", 
+                                  right : "topRight", 
+                                  downRight : "middleRight",
+                                  down : "center",
+                                  downLeft : "middleLeft"
                                 };
-    this.slots.topRight.neighbors = {
-                                  left : this.slots.topCenter, 
-                                  down : this.slots.middleLeft,
-                                  downLeft : this.slots.center
+    this.positions.topRight.neighbors = {
+                                  left : "topCenter", 
+                                  down : "middleLeft",
+                                  downLeft : "center"
                                 };
-    this.slots.middleLeft.neighbors = {
-                                  up : this.slots.topLeft, 
-                                  upRight : this.slots.topCenter,
-                                  right : this.slots.center,
+    this.positions.middleLeft.neighbors = {
+                                  up : "topLeft", 
+                                  upRight : "topCenter",
+                                  right : "center",
                                 };
-    this.slots.center.neighbors = {
-                                  left : this.slots.middleLeft,
-                                  upLeft : this.slots.topLeft,
-                                  up : this.slots.topCenter, 
-                                  upRight : this.slots.topRight,
-                                  right : this.slots.middleRight,
-                                  downRight : this.slots.bottomRight,
-                                  down : this.slots.bottomCenter,
-                                  downLeft : this.slots.bottomLeft,
+    this.positions.center.neighbors = {
+                                  left : "middleLeft",
+                                  upLeft : "topLeft",
+                                  up : "topCenter", 
+                                  upRight : "topRight",
+                                  right : "middleRight",
+                                  downRight : "bottomRight",
+                                  down : "bottomCenter",
+                                  downLeft : "bottomLeft",
                                 }; 
-    this.slots.middleRight.neighbors = {
-                                  left : this.slots.center,
-                                  upLeft : this.slots.topCenter,
-                                  up : this.slots.topRight, 
-                                  down : this.slots.bottomRight,
-                                  downLeft : this.slots.bottomCenter,
+    this.positions.middleRight.neighbors = {
+                                  left : "center",
+                                  upLeft : "topCenter",
+                                  up : "topRight", 
+                                  down : "bottomRight",
+                                  downLeft : "bottomCenter",
                                 };
-    this.slots.bottomLeft.neighbors = {
-                                  up : this.slots.middleLeft, 
-                                  upRight : this.slots.center,
-                                  right : this.slots.bottomCenter,
+    this.positions.bottomLeft.neighbors = {
+                                  up : "middleLeft", 
+                                  upRight : "center",
+                                  right : "bottomCenter",
                                 };
-    this.slots.bottomCenter.neighbors = {
-                                  left : this.slots.bottomLeft, 
-                                  upLeft : this.slots.middleLeft,
-                                  up : this.slots.center,
-                                  upRight : this.slots.middleRight,
-                                  right : this.slots.bottomRight,
+    this.positions.bottomCenter.neighbors = {
+                                  left : "bottomLeft", 
+                                  upLeft : "middleLeft",
+                                  up : "center",
+                                  upRight : "middleRight",
+                                  right : "bottomRight",
                                 };
-    this.slots.bottomRight.neighbors = {
-                                  left : this.slots.bottomCenter, 
-                                  upLeft : this.slots.center,
-                                  up : this.slots.middleRight,
+    this.positions.bottomRight.neighbors = {
+                                  left : "bottomCenter", 
+                                  upLeft : "center",
+                                  up : "middleRight",
                                 };             
 
 
   }
   else{
-    this.slots = currentGameSlots;
+    this.positions = currentGamepositions;
   }
 
 }
 
 Board.prototype.setMarker = function(position, marker){
-  var slot = this.slots[position];
-  slot.marker = marker;
+  var position = this.positions[position];
+  var blank = "[ ]";
+  if(position.marker == blank){
+    position.marker = marker;
+  }
+
 };
 
 
