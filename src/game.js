@@ -1,6 +1,8 @@
 var x = " X ";
 var o  = " O ";
 var blank = "[ ]";
+var User = require('../src/user');
+var Computer = require('../src/computer');
 
 function Game (){
   this.lastMove = {player : null, position : null};
@@ -68,6 +70,37 @@ Game.prototype.checkForWin = function(board){
   check(x);
   check(o);
   return winner;
+}
+Game.prototype.checkForTie = function(board){
+  if(this.availablePositions(board).length == 0){
+    return true;
+  }
+}
+Game.prototype.moveIsValid = function(position, board){
+  var moveValid = false;
+  this.availablePositions(board).forEach(function(availPosition){
+    if(availPosition == position){
+      moveValid = true;
+    }
+  })
+  return moveValid;
+}
+Game.prototype.setLastMove = function(playerMarker, position, board){
+  var board = board;
+  this.lastMove = {player : playerMarker, position : position};
+  if(board){board.positions[position] = playerMarker;}
+}
+Game.prototype.promptUser = function(){
+  console.log("in user prompt");
+}
+Game.prototype.promptComputer = function(){
+  console.log("in user prompt");
+}
+Game.prototype.next = function(board){
+  var user = new User();
+  if(this.availablePositions(board)){
+    this.lastMove.player == x ? this.promptUser() : this.promptComputer();
+  }
 }
 
 module.exports = Game;

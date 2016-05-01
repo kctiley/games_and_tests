@@ -2,8 +2,8 @@ function User (){
 
 }
 
-User.prototype.prompt = function(){
-  return "User select pos"
+User.prototype.selectPosition = function(){
+
 }
 
 module.exports = User;

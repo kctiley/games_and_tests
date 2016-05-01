@@ -1,5 +1,7 @@
 var Game = require('../src/game');
 var Board = require('../src/board');
+var User = require('../src/user');
+// var Computer = require('../src/computer');
 var x = " X ";
 var o  = " O ";
 var blank = "[ ]";
@@ -23,10 +25,15 @@ var blank = "[ ]";
     });
 
     describe('methods', function () {
+
+      var game; 
+      var board; 
+      beforeEach(function(){
+        game = new Game();
+        board = new Board();
+      })
       
       it('should have all board positions listed as available when a new game is created with no existing positions as arguments', function () {
-        var game = new Game();
-        var board = new Board();
         var allPositions = [];
         for (position in board.positions){
           allPositions.push(position);
@@ -35,8 +42,6 @@ var blank = "[ ]";
       });
 
       it('should have all board positions listed as available when a new game is created with no existing positions as arguments', function () {
-        var game = new Game();
-        var board = new Board();
         var allPositions = [];
         for (position in board.positions){
           allPositions.push(position);
@@ -45,8 +50,6 @@ var blank = "[ ]";
       });
 
       it('should check for a win for x', function () {
-        var game = new Game();
-        var board = new Board();
         var allPositions = [];
         board.positions.topLeft.marker = x;
         board.positions.center.marker = x;
@@ -56,8 +59,6 @@ var blank = "[ ]";
       });
 
       it('should check for a win for o', function () {
-        var game = new Game();
-        var board = new Board();
         var allPositions = [];
         board.positions.topCenter.marker = o;
         board.positions.center.marker = o;
@@ -65,7 +66,57 @@ var blank = "[ ]";
 
         expect(game.checkForWin(board)).toEqual(o);
       });
+
+      it('should check for a win for a tie', function () {
+        var allPositions = [];
+        board.positions.topCenter.marker = x;
+        board.positions.center.marker = x;
+        board.positions.bottomCenter.marker = o;
+        board.positions.topLeft.marker = o;
+        board.positions.topRight.marker = x;
+        board.positions.middleLeft.marker = x;
+        board.positions.middleRight.marker = o;
+        board.positions.bottomRight.marker = x;
+        board.positions.bottomLeft.marker = o;
+
+        expect(game.checkForTie(board)).toEqual(true);
+      });
+
+      it('should set last move data', function () {
+        var allPositions = [];
+        game.setLastMove(x, "center")
+
+        expect(game.lastMove).toEqual({player : x, position : "center"});
+      });
+
+      it('should determine next player to select a position', function () {
+        game.setLastMove(x, "center");
+        spyOn(game, 'promptUser');
+        game.next(board);
+
+        expect(game.promptUser).toHaveBeenCalled();
+      })
       
+     it('should determine next player to select a position', function () {
+        game.setLastMove(o, "bottomCenter");
+        spyOn(game, 'promptComputer');
+        game.next(board);
+
+        expect(game.promptComputer).toHaveBeenCalled();
+      })
+
+     it('should determine if move is valid', function () {
+        game.setLastMove(o, "bottomCenter", board);
+
+        expect(game.moveIsValid('bottomCenter', board)).toEqual(false);
+      })
+
+     it('should determine if move is valid', function () {
+        game.setLastMove(o, "bottomCenter", board);
+
+        expect(game.moveIsValid('center', board)).toEqual(true);
+      })
+
 
     });
 
