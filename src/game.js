@@ -3,15 +3,17 @@ var o  = " O ";
 var blank = "[ ]";
 var User = require('../src/user');
 var Computer = require('../src/computer');
+var Board = require('../src/board');
 
 function Game (){
   this.lastMove = {player : null, position : null};
   this.status = "next";
+  this.board = new Board();
 }
 
-Game.prototype.availablePositions = function(board){
-  var board = board;
+Game.prototype.availablePositions = function(){
   var availablePositions = [];
+  var board = this.board;
   for (position in board.positions){
     if(board.positions[position].marker == blank){availablePositions.push(position)}
   };
@@ -19,8 +21,9 @@ Game.prototype.availablePositions = function(board){
 
 }
 
-Game.prototype.checkForWin = function(board){
+Game.prototype.checkForWin = function(){
   var winner = false;
+  var board = this.board;
 
   var check = function(marker){
     var mkr = marker;
@@ -71,22 +74,22 @@ Game.prototype.checkForWin = function(board){
   check(o);
   return winner;
 }
-Game.prototype.checkForTie = function(board){
-  if(this.availablePositions(board).length == 0){
+Game.prototype.checkForTie = function(){
+  if(this.availablePositions(this.board).length == 0 && this.status != "winner"){
     return true;
   }
 }
-Game.prototype.moveIsValid = function(position, board){
+Game.prototype.moveIsValid = function(position){
   var moveValid = false;
-  this.availablePositions(board).forEach(function(availPosition){
+  this.availablePositions(this.board).forEach(function(availPosition){
     if(availPosition == position){
       moveValid = true;
     }
   })
   return moveValid;
 }
-Game.prototype.setLastMove = function(playerMarker, position, board){
-  var board = board;
+Game.prototype.setLastMove = function(playerMarker, position){
+  var board = this.board;
   this.lastMove = {player : playerMarker, position : position};
   if(board){board.positions[position] = playerMarker;}
 }
@@ -98,7 +101,7 @@ Game.prototype.promptComputer = function(){
 }
 Game.prototype.next = function(board){
   var user = new User();
-  if(this.availablePositions(board)){
+  if(this.availablePositions(this.board)){
     this.lastMove.player == x ? this.promptUser() : this.promptComputer();
   }
 }
