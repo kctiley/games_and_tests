@@ -11,6 +11,10 @@ function Game (){
   this.board = new Board();
 }
 
+Game.prototype.message = function(message){
+  console.log("New message: " + message);
+}
+
 Game.prototype.availablePositions = function(){
   var availablePositions = [];
   var board = this.board;
@@ -21,7 +25,7 @@ Game.prototype.availablePositions = function(){
 
 }
 
-Game.prototype.checkForWin = function(){
+Game.prototype.checkForWinner = function(){
   var winner = false;
   var board = this.board;
 
@@ -88,22 +92,33 @@ Game.prototype.moveIsValid = function(position){
   })
   return moveValid;
 }
-Game.prototype.setLastMove = function(playerMarker, position){
-  var board = this.board;
-  this.lastMove = {player : playerMarker, position : position};
-  if(board){board.positions[position] = playerMarker;}
+Game.prototype.setMove = function(playerMarker, position){
+  if(this.moveIsValid(position)){
+    this.lastMove = {player : playerMarker, position : position};
+    this.board.positions[position] = playerMarker;
+  }
+  else{
+    game.message("Invalid move")
+    playerMarker == x ? promptComputer() : promptUser();
+  }
 }
 Game.prototype.promptUser = function(){
   console.log("in user prompt");
+  console.log(this)
+  // var selection = prompt('Enter a position');
+  // this.setMove(o, selection);
+
+
 }
 Game.prototype.promptComputer = function(){
-  console.log("in user prompt");
+  console.log('in promptComputer')
+  this.playerTurn = 'computer';
 }
-Game.prototype.next = function(board){
-  var user = new User();
-  if(this.availablePositions(this.board)){
-    this.lastMove.player == x ? this.promptUser() : this.promptComputer();
+Game.prototype.next = function(){
+  if(this.availablePositions(this.board) && this.status != "winner"){
+    this.lastMove.player == o ? this.promptComputer() : this.promptUser();
   }
 }
+
 
 module.exports = Game;

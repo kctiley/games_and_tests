@@ -1,7 +1,7 @@
 var Game = require('../src/game');
 var Board = require('../src/board');
 var User = require('../src/user');
-// var Computer = require('../src/computer');
+var Computer = require('../src/computer');
 var x = " X ";
 var o  = " O ";
 var blank = "[ ]";
@@ -55,7 +55,7 @@ var blank = "[ ]";
         game.board.positions.center.marker = x;
         game.board.positions.bottomRight.marker = x;
 
-        expect(game.checkForWin()).toEqual(x);
+        expect(game.checkForWinner()).toEqual(x);
       });
 
       it('should check for a win for o', function () {
@@ -64,7 +64,7 @@ var blank = "[ ]";
         game.board.positions.center.marker = o;
         game.board.positions.bottomCenter.marker = o;
 
-        expect(game.checkForWin(game.board)).toEqual(o);
+        expect(game.checkForWinner(game.board)).toEqual(o);
       });
 
       it('should check for a win for a tie', function () {
@@ -84,35 +84,35 @@ var blank = "[ ]";
 
       it('should set last move data', function () {
         var allPositions = [];
-        game.setLastMove(x, "center")
+        game.setMove(x, "center")
 
         expect(game.lastMove).toEqual({player : x, position : "center"});
       });
 
       it('should determine next player to select a position', function () {
-        game.setLastMove(x, "center");
+        game.setMove(x, "center");
         spyOn(game, 'promptUser');
         game.next();
 
         expect(game.promptUser).toHaveBeenCalled();
       })
       
-     it('should determine next player to select a position', function () {
-        game.setLastMove(o, "bottomCenter");
+      it('should determine next player to select a position', function () {
+        game.setMove(o, "bottomCenter");
         spyOn(game, 'promptComputer');
         game.next();
 
         expect(game.promptComputer).toHaveBeenCalled();
       })
 
-     it('should determine if move is valid', function () {
-        game.setLastMove(o, "bottomCenter");
+      it('should determine if move is valid', function () {
+        game.setMove(o, "bottomCenter");
 
         expect(game.moveIsValid('bottomCenter')).toEqual(false);
       })
 
-     it('should determine if move is valid', function () {
-        game.setLastMove(o, "bottomCenter");
+      it('should determine if move is valid', function () {
+        game.setMove(o, "bottomCenter");
 
         expect(game.moveIsValid('center')).toEqual(true);
       })
