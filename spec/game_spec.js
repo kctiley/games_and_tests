@@ -1,7 +1,7 @@
 var Game = require('../src/game');
 var Board = require('../src/board');
-var User = require('../src/user');
-var Computer = require('../src/computer');
+// var User = require('../src/user');
+// var Computer = require('../src/computer');
 var x = " X ";
 var o  = " O ";
 var blank = "[ ]";
@@ -83,26 +83,23 @@ var blank = "[ ]";
       });
 
       it('should set last move data', function () {
-        var allPositions = [];
         game.setMove(x, "center")
 
         expect(game.lastMove).toEqual({player : x, position : "center"});
       });
 
-      it('should determine next player to select a position', function () {
+      it('should set current player to o if last player was x', function () {
         game.setMove(x, "center");
-        spyOn(game, 'promptUser');
-        game.next();
+        // spyOn(game, 'promptUser');
 
-        expect(game.promptUser).toHaveBeenCalled();
+        // expect(game.promptUser).toHaveBeenCalled();
+        expect(game.nextPlayer).toEqual(o);
       })
       
-      it('should determine next player to select a position', function () {
+      it('should set current player to x if last player was o', function () {
         game.setMove(o, "bottomCenter");
-        spyOn(game, 'promptComputer');
-        game.next();
 
-        expect(game.promptComputer).toHaveBeenCalled();
+        expect(game.nextPlayer).toEqual(x);
       })
 
       it('should determine if move is valid', function () {
@@ -115,6 +112,13 @@ var blank = "[ ]";
         game.setMove(o, "bottomCenter");
 
         expect(game.moveIsValid('center')).toEqual(true);
+      })
+
+      it('should keep same player as next player if move selected was not valid', function () {
+        game.setMove(x,"bottomCenter");
+        game.setMove(o, "bottomCenter");
+
+        expect(game.nextPlayer).toEqual(o);
       })
 
 
