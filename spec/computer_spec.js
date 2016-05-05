@@ -28,7 +28,7 @@ describe('Computer', function () {
 
     });
 
-    describe('finds available corner positions', function () {
+    describe('finds available corner move', function () {
       it('all corners are available initially', function () {
         var board = new Board();
         computer.move(board);
@@ -40,6 +40,22 @@ describe('Computer', function () {
         computer.move(board);
         board.setMarker('topLeft', x);
         expect(computer.availableCorners(board)).toEqual(['topRight', 'bottomRight', 'bottomLeft']);
+      });
+
+    });
+
+    describe('finds available center move', function () {
+      it('center available initially', function () {
+        var board = new Board();
+        computer.move(board);
+        expect(computer.availableCenter(board)).toEqual(['center']);
+      });
+
+      it('finds only available center move', function () {
+        var board = new Board();
+        computer.move(board);
+        board.setMarker('center', x);
+        expect(computer.availableCenter(board)).toEqual([]);
       });
 
     });

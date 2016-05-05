@@ -16,6 +16,11 @@ Computer.prototype.findAvailable = function(board, positionsToCheck){
   return availablePositions;
 }
 
+Computer.prototype.availableCenter = function(board){
+  var center = ['center'];
+  return this.findAvailable(board, center);
+}
+
 Computer.prototype.availableCorners = function(board){
   var cornerPositions = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
   return this.findAvailable(board, cornerPositions);
@@ -27,6 +32,7 @@ Computer.prototype.availableSides = function(board){
 }
 
 Computer.prototype.move = function(board){
+  this.availableCenter(board)
   this.availableCorners(board);
   this.availableSides(board);
 }
