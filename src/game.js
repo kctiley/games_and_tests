@@ -93,13 +93,17 @@ Game.prototype.setMove = function(playerMarker, position){
   else{
     this.message("Invalid move")
   }
-  this.next();
+  this.updateGame();
 }
 
-Game.prototype.next = function(){
+Game.prototype.updateGame = function(){
   if(this.availablePositions(this.board) && this.status != "winner"){
-    this.lastMove.player == o ? this.nextPlayer = x : this.nextPlayer = o;
+    this.nextPlayerGo();
   }
+}
+
+Game.prototype.nextPlayerGo = function(){
+  this.lastMove.player == o ? this.nextPlayer = x : this.nextPlayer = o;
 }
 
 
