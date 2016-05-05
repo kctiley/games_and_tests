@@ -12,20 +12,35 @@ describe('Computer', function () {
   })
     
   describe('methods', function () {
-    describe('selects available side position', function () {
-      it('determines available side moves', function () {
+    describe('finds available side moves', function () {
+      it('all sides are available initially', function () {
         var board = new Board();
         computer.move(board);
-        expect(computer.availableSideMoves(board)).toEqual(['topCenter', 'middleRight', 'bottomCenter', 'middleLeft']);
+        expect(computer.availableSides(board)).toEqual(['topCenter', 'middleRight', 'bottomCenter', 'middleLeft']);
       });
 
-      it('determines available side moves', function () {
+      it('determines only available side moves', function () {
         var board = new Board();
         computer.move(board);
         board.setMarker('topCenter', x);
-        expect(computer.availableSideMoves(board)).toEqual(['middleRight', 'bottomCenter', 'middleLeft']);
+        expect(computer.availableSides(board)).toEqual(['middleRight', 'bottomCenter', 'middleLeft']);
       });
 
+    });
+
+    describe('finds available corner positions', function () {
+      it('all corners are available initially', function () {
+        var board = new Board();
+        computer.move(board);
+        expect(computer.availableCorners(board)).toEqual(['topLeft', 'topRight', 'bottomRight', 'bottomLeft']);
+      });
+
+      it('finds only available corner moves', function () {
+        var board = new Board();
+        computer.move(board);
+        board.setMarker('topLeft', x);
+        expect(computer.availableCorners(board)).toEqual(['topRight', 'bottomRight', 'bottomLeft']);
+      });
 
     });
   });

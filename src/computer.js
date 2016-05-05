@@ -16,13 +16,19 @@ Computer.prototype.findAvailable = function(board, positionsToCheck){
   return availablePositions;
 }
 
-Computer.prototype.availableSideMoves = function(board){
+Computer.prototype.availableCorners = function(board){
+  var cornerPositions = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
+  return this.findAvailable(board, cornerPositions);
+}
+
+Computer.prototype.availableSides = function(board){
   var sidePositions = ['topCenter', 'middleRight', 'bottomCenter', 'middleLeft'];
   return this.findAvailable(board, sidePositions);
 }
 
 Computer.prototype.move = function(board){
-  this.availableSideMoves(board);
+  this.availableCorners(board);
+  this.availableSides(board);
 }
 
 module.exports = Computer;
