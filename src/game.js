@@ -11,7 +11,7 @@ function Game (){
 }
 
 Game.prototype.message = function(message){
-  console.log("New message: " + message);
+  console.log(message)
 }
 
 Game.prototype.availablePositions = function(){
@@ -82,20 +82,13 @@ Game.prototype.checkForTie = function(){
     return true;
   }
 }
-Game.prototype.moveIsValid = function(position){
-  // var moveValid = false;
-  return this.availablePositions(this.board).indexOf(position) == -1 ? false : true;
-  // this.availablePositions(this.board).forEach(function(availPosition){
-  //   if(availPosition == position){
-  //     moveValid = true;
-  //   }
-  // })
-  // return moveValid;
+Game.prototype.moveIsValid = function(playerMarker, position){
+  return this.availablePositions(this.board).indexOf(position) == -1  || this.nextPlayer != playerMarker ? false : true;
 }
 Game.prototype.setMove = function(playerMarker, position){
-  if(this.moveIsValid(position)){
+  if(this.moveIsValid(playerMarker, position)){
     this.lastMove = {player : playerMarker, position : position};
-    this.board.positions[position] = playerMarker;
+    this.board.positions[position].marker = playerMarker;
   }
   else{
     this.message("Invalid move")

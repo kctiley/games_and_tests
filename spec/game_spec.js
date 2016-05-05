@@ -83,7 +83,8 @@ var blank = "[ ]";
       });
 
       it('should set last move data', function () {
-        game.setMove(x, "center")
+        game.setMove(o, "topLeft");
+        game.setMove(x, "center");
 
         expect(game.lastMove).toEqual({player : x, position : "center"});
       });
@@ -105,16 +106,17 @@ var blank = "[ ]";
       it('should determine if move is valid', function () {
         game.setMove(o, "bottomCenter");
 
-        expect(game.moveIsValid('bottomCenter')).toEqual(false);
+        expect(game.moveIsValid(o,'bottomCenter')).toEqual(false);
       })
 
       it('should determine if move is valid', function () {
         game.setMove(o, "bottomCenter");
 
-        expect(game.moveIsValid('center')).toEqual(true);
+        expect(game.moveIsValid(x, 'center')).toEqual(true);
       })
 
-      it('should keep same player as next player if move selected was not valid', function () {
+      it('should not proceed to next player if move selected was not valid', function () {
+        game.setMove(o, 'middleRight');
         game.setMove(x,"bottomCenter");
         game.setMove(o, "bottomCenter");
 
