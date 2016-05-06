@@ -55,7 +55,20 @@ Computer.prototype.neighborDirectionData = function(board, playerMarker){
   return data;
 }
 
-Computer.prototype.blockForkMoves = function(board){
+Computer.prototype.computerForkMoves = function(board){
+  var moves = this.availableTwoInRowMoves(board, x)
+  var result = [];
+  var movesCount = {};
+  for (position in moves){
+    movesCount[moves[position]] == undefined? movesCount[moves[position]] = 1  : movesCount[moves[position]]++;
+  }
+  for (position in movesCount){
+    if(movesCount[position] > 1){result.push(position)} 
+  }
+  return result;
+}
+
+Computer.prototype.userForkMoves = function(board){
   var moves = this.availableTwoInRowMoves(board, o)
   var result = [];
   var movesCount = {};
@@ -103,7 +116,7 @@ Computer.prototype.availableSides = function(board){
 }
 
 Computer.prototype.move = function(board){
-  // this.blockForkMoves(board, playerMarker);
+  // this.userForkMoves(board, playerMarker);
   // this.availableTwoInRowMoves(board);
   // this.availableCenter(board);
   // this.availableCorners(board);

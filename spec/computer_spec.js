@@ -102,26 +102,62 @@ describe('Computer', function () {
 
     describe('finds available moves that block user forks', function () {
 
-      it('initially finds moves that block a fork', function () {
+      it('finds moves that block a fork', function () {
         var board = new Board();
         computer.move(board);
         board.setMarker('topLeft', o);
         board.setMarker('bottomRight', o);
 
-        expect(computer.blockForkMoves(board)).toContain('bottomLeft');
-        expect(computer.blockForkMoves(board)).toContain('topRight');
+        expect(computer.userForkMoves(board)).toContain('bottomLeft');
+        expect(computer.userForkMoves(board)).toContain('topRight');
       });
 
-      it('initially finds moves that block a fork', function () {
+      it('finds moves that block user fork', function () {
         var board = new Board();
         computer.move(board);
         board.setMarker('topCenter', o);
         board.setMarker('bottomRight', o);
 
-        expect(computer.blockForkMoves(board)).toContain('bottomCenter');
-        expect(computer.blockForkMoves(board)).toContain('topRight');
-        expect(computer.blockForkMoves(board)).toContain('topLeft');
-        expect(computer.blockForkMoves(board)).toContain('center');
+        expect(computer.userForkMoves(board)).toContain('bottomCenter');
+        expect(computer.userForkMoves(board)).toContain('topRight');
+        expect(computer.userForkMoves(board)).toContain('topLeft');
+        expect(computer.userForkMoves(board)).toContain('center');
+      });
+
+    });
+
+    describe('finds available moves that create computer fork', function () {
+
+      it('finds available moves that create computer fork', function () {
+        var board = new Board();
+        computer.move(board);
+        board.setMarker('topLeft', x);
+        board.setMarker('bottomRight', x);
+
+        expect(computer.computerForkMoves(board)).toContain('bottomLeft');
+        expect(computer.computerForkMoves(board)).toContain('topRight');
+      });
+
+      it('finds available moves that create computer fork', function () {
+        var board = new Board();
+        computer.move(board);
+        board.setMarker('bottomLeft', x);
+        board.setMarker('topRight', x);
+
+        expect(computer.computerForkMoves(board)).toContain('bottomRight');
+        expect(computer.computerForkMoves(board)).toContain('topLeft');
+      });
+
+      it('finds available moves that create computer fork', function () {
+        var board = new Board();
+        computer.move(board);
+        board.setMarker('topCenter', x);
+        board.setMarker('bottomRight', x);
+
+        expect(computer.computerForkMoves(board)).toContain('bottomCenter');
+        expect(computer.computerForkMoves(board)).toContain('topRight');
+        expect(computer.computerForkMoves(board)).toContain('topLeft');
+        expect(computer.computerForkMoves(board)).toContain('center');
       });
 
     });

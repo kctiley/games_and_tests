@@ -26,14 +26,15 @@ function Board(existingBoardPositions) {
                                 };
     this.positions.topRight.neighbors = {
                                   left : "topCenter", 
-                                  down : "middleLeft",
-                                  downLeft : "center"
+                                  down : "middleRight",
+                                  downLeft : "center",
                                 };
     this.positions.middleLeft.neighbors = {
                                   up : "topLeft", 
                                   upRight : "topCenter",
                                   right : "center",
-                                  down : "bottomRight",
+                                  downRight : "bottomCenter",
+                                  down : "bottomLeft",
                                 };
     this.positions.center.neighbors = {
                                   left : "middleLeft",
