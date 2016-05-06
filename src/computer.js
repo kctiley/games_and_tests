@@ -37,24 +37,40 @@ Computer.prototype.neighborDirectionData = function(board){
       }
     }
     checkNeighbor(homePosition, direction);
-    console.log(directionCounts)
+
     return (directionCounts)
     
     
   }
   var data = {};
   for (position in board.positions){
-    data[position] = {};
-    console.log(position)
     if(board.positions[position].marker == blank){
+      data[position] = {};
       for (direction in board.positions[position].neighbors){
-        // checkDirection(position, direction)
         data[position][direction] = checkDirection(position, direction)[direction]
       }
     }
   }
-  console.log(data)
+  // console.log(data)
+  return data;
 }
+
+Computer.prototype.availableTwoInRowMoves = function(board){
+  var result = [];
+  var neighborsData = this. neighborDirectionData(board);
+  for(position in neighborsData){
+    console.log(position) 
+    var pstn = neighborsData[position];
+    console.log(pstn.left, pstn.right)
+    if(pstn.left.same + pstn.right.same == 1 && pstn.left.blank + pstn.right.blank == 1){
+      console.log("in")
+      result.push(position)
+    }
+  }
+  console.log(result)
+  return result;
+}
+
 
 Computer.prototype.availableCenter = function(board){
   var center = ['center'];
@@ -72,7 +88,7 @@ Computer.prototype.availableSides = function(board){
 }
 
 Computer.prototype.move = function(board){
-  this.neighborDirectionData;
+  this.availableTwoInRowMoves(board);
   this.availableCenter(board);
   this.availableCorners(board);
   this.availableSides(board);

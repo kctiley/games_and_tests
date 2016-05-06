@@ -67,12 +67,18 @@ describe('Computer', function () {
       //   expect(computer.availableMovesMakeTwoInRow(board)).toEqual([]);
       // });
 
-      it('move that make two in a row', function () {
+      it('finds horizontal moves that make two in a row', function () {
         var board = new Board();
-        board.setMarker('center', x);
         board.setMarker('middleLeft', x);
         computer.move(board);
-        expect(computer.neighborDirectionData(board)).toContain(['middleRight']);
+        expect(computer.availableTwoInRowMoves(board)).toEqual(['middleRight', 'center']);
+      });
+
+      it('finds horizontal moves that make two in a row', function () {
+        var board = new Board();
+        board.setMarker('topLeft', x);
+        computer.move(board);
+        expect(computer.availableTwoInRowMoves(board)).toEqual(['topCenter', 'topRight']);
       });
       
     });
