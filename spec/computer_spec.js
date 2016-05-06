@@ -64,52 +64,67 @@ describe('Computer', function () {
       it('initially has no moves that make two in a row', function () {
         var board = new Board();
         computer.move(board);
-        expect(computer.availableTwoInRowMoves(board)).toEqual([]);
+        expect(computer.availableTwoInRowMoves(board, x)).toEqual([]);
       });
 
       it('finds horizontal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('middleLeft', x);
         computer.move(board);
-        expect(computer.availableTwoInRowMoves(board)).toContain('middleRight');
+        expect(computer.availableTwoInRowMoves(board, x)).toContain('middleRight');
       });
 
       it('finds horizontal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('topLeft', x);
         computer.move(board);
-        expect(computer.availableTwoInRowMoves(board)).toContain('topRight');
-        expect(computer.availableTwoInRowMoves(board)).toContain('topCenter');
+        expect(computer.availableTwoInRowMoves(board, x)).toContain('topRight');
+        expect(computer.availableTwoInRowMoves(board, x)).toContain('topCenter');
       });
 
       it('finds vertical moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('topLeft', x);
         computer.move(board);
-        expect(computer.availableTwoInRowMoves(board)).toContain('middleLeft');
-        expect(computer.availableTwoInRowMoves(board)).toContain('bottomLeft');
+        expect(computer.availableTwoInRowMoves(board, x)).toContain('middleLeft');
+        expect(computer.availableTwoInRowMoves(board, x)).toContain('bottomLeft');
       });
 
       it('finds diagonal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('topLeft', x);
         computer.move(board);
-        expect(computer.availableTwoInRowMoves(board)).toContain('center');
-        expect(computer.availableTwoInRowMoves(board)).toContain('bottomLeft');
+        expect(computer.availableTwoInRowMoves(board, x)).toContain('center');
+        expect(computer.availableTwoInRowMoves(board, x)).toContain('bottomLeft');
       });
       
     });
 
-    // describe('finds available moves that make two in a row', function () {
-    //   it('initially has no moves that block a fork', function () {
-    //     var board = new Board();
-    //     board.setMarker('topLeft', o);
-    //     board.setMarker('bottomCenter', o);
-    //     computer.move(board);
-    //     expect(computer.availableTwoInRowMoves(board)).toEqual([]);
-    //   });
+    describe('finds available moves that block user forks', function () {
 
-    // });
+      it('initially finds moves that block a fork', function () {
+        var board = new Board();
+        computer.move(board);
+        board.setMarker('topLeft', o);
+        board.setMarker('bottomRight', o);
+
+        expect(computer.blockForkMoves(board)).toContain('bottomLeft');
+        expect(computer.blockForkMoves(board)).toContain('topRight');
+      });
+
+      it('initially finds moves that block a fork', function () {
+        var board = new Board();
+        computer.move(board);
+        board.setMarker('topCenter', o);
+        board.setMarker('bottomRight', o);
+
+        expect(computer.blockForkMoves(board)).toContain('bottomCenter');
+        expect(computer.blockForkMoves(board)).toContain('topRight');
+        expect(computer.blockForkMoves(board)).toContain('topLeft');
+        expect(computer.blockForkMoves(board)).toContain('center');
+      });
+
+    });
 
   });
 

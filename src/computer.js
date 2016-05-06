@@ -18,8 +18,7 @@ Computer.prototype.findAvailable = function(board, positionsToCheck){
 
 
 
-Computer.prototype.neighborDirectionData = function(board){
-  var same = x;
+Computer.prototype.neighborDirectionData = function(board, playerMarker){
   var checkDirection = function(position, direction){
     var directionCounts = {};
     directionCounts[direction] = {same : 0, blank : 0};
@@ -27,7 +26,7 @@ Computer.prototype.neighborDirectionData = function(board){
     var checkNeighbor = function(pstn, direction){
       if(board.positions[pstn].neighbors[direction]){
         var neighborPosition = board.positions[pstn].neighbors[direction];
-        if(board.positions[neighborPosition].marker == same){
+        if(board.positions[neighborPosition].marker == playerMarker){
           directionCounts[direction].same++;
         }
         if(board.positions[neighborPosition].marker == blank){
@@ -52,24 +51,35 @@ Computer.prototype.neighborDirectionData = function(board){
     }
   }
   
-  console.log(data)
+  // console.log(data)
   return data;
 }
 
-Computer.prototype.availableTwoInRowMoves = function(board){
+Computer.prototype.blockForkMoves = function(board){
+  var moves = this.availableTwoInRowMoves(board, o)
   var result = [];
-  var neighborsData = this. neighborDirectionData(board);
+  var movesCount = {};
+  for (position in moves){
+    movesCount[moves[position]] == undefined? movesCount[moves[position]] = 1  : movesCount[moves[position]]++;
+  }
+  for (position in movesCount){
+    if(movesCount[position] > 1){result.push(position)} 
+  }
+  return result;
+}
+
+Computer.prototype.availableTwoInRowMoves = function(board, playerMarker){
+  var result = [];
+  var neighborsData = this. neighborDirectionData(board, playerMarker);
   for(position in neighborsData){
     var pstn = neighborsData[position];
     if(pstn.left.same + pstn.right.same == 1 && pstn.left.blank + pstn.right.blank == 1){
       result.push(position)
     }
     if(pstn.up.same + pstn.down.same == 1 && pstn.up.blank + pstn.down.blank == 1){
-      console.log(pstn)
       result.push(position)
     }
     if(pstn.upLeft.same + pstn.downRight.same == 1 && pstn.upLeft.blank + pstn.downRight.blank == 1){
-      console.log(pstn)
       result.push(position)
     }
   }
@@ -93,10 +103,11 @@ Computer.prototype.availableSides = function(board){
 }
 
 Computer.prototype.move = function(board){
-  this.availableTwoInRowMoves(board);
-  this.availableCenter(board);
-  this.availableCorners(board);
-  this.availableSides(board);
+  // this.blockForkMoves(board, playerMarker);
+  // this.availableTwoInRowMoves(board);
+  // this.availableCenter(board);
+  // this.availableCorners(board);
+  // this.availableSides(board);
 }
 
 module.exports = Computer;
