@@ -84,13 +84,8 @@ function Board(existingBoardPositions) {
 
 }
 
-Board.prototype.setMarker = function(position, marker){
-  var position = this.positions[position];
-  var blank = "[ ]";
-  if(position.marker == blank){
-    position.marker = marker;
-  }
-
+Board.prototype.setMarker = function(position, playerMarker){
+  this.positions[position].marker = playerMarker;
 };
 
 

@@ -41,17 +41,13 @@ var Board = require('../src/board');
     });
 
     describe('methods', function () {
+      
       describe('setMarker', function () {
-        it('sets marker to position of player choice if existing is blank', function () {
+        it('sets marker', function () {
           board.setMarker("center", x);
           expect(board.positions.center.marker).toEqual(' X ');
         });
 
-        it('will not set marker to position of player choice if existing is not blank', function () {
-          board.setMarker("topLeft", o);
-          board.setMarker("topLeft", x);
-          expect(board.positions.topLeft.marker).toEqual(' O ');
-        });
       });
     });
 

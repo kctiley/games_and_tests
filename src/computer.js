@@ -16,6 +16,46 @@ Computer.prototype.findAvailable = function(board, positionsToCheck){
   return availablePositions;
 }
 
+
+
+Computer.prototype.neighborDirectionData = function(board){
+  var same = x;
+  var checkDirection = function(position, direction){
+    var directionCounts = {};
+    directionCounts[direction] = {same : 0, blank : 0};
+    var homePosition = position;
+    var checkNeighbor = function(pstn, direction){
+      if(board.positions[pstn].neighbors[direction]){
+        var neighborPosition = board.positions[pstn].neighbors[direction];
+        if(board.positions[neighborPosition].marker == same){
+          directionCounts[direction].same++;
+        }
+        if(board.positions[neighborPosition].marker == blank){
+          directionCounts[direction].blank++;
+        }
+        checkNeighbor(neighborPosition, direction)
+      }
+    }
+    checkNeighbor(homePosition, direction);
+    console.log(directionCounts)
+    return (directionCounts)
+    
+    
+  }
+  var data = {};
+  for (position in board.positions){
+    data[position] = {};
+    console.log(position)
+    if(board.positions[position].marker == blank){
+      for (direction in board.positions[position].neighbors){
+        // checkDirection(position, direction)
+        data[position][direction] = checkDirection(position, direction)[direction]
+      }
+    }
+  }
+  console.log(data)
+}
+
 Computer.prototype.availableCenter = function(board){
   var center = ['center'];
   return this.findAvailable(board, center);
@@ -32,7 +72,8 @@ Computer.prototype.availableSides = function(board){
 }
 
 Computer.prototype.move = function(board){
-  this.availableCenter(board)
+  this.neighborDirectionData;
+  this.availableCenter(board);
   this.availableCorners(board);
   this.availableSides(board);
 }
