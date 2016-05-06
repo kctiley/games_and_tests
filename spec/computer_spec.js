@@ -61,24 +61,33 @@ describe('Computer', function () {
     });
 
     describe('finds available moves that make two in a row', function () {
-      // it('initially has no moves that make two in a row', function () {
-      //   var board = new Board();
-      //   computer.move(board);
-      //   expect(computer.availableMovesMakeTwoInRow(board)).toEqual([]);
-      // });
+      it('initially has no moves that make two in a row', function () {
+        var board = new Board();
+        computer.move(board);
+        expect(computer.availableTwoInRowMoves(board)).toEqual([]);
+      });
 
       it('finds horizontal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('middleLeft', x);
         computer.move(board);
-        expect(computer.availableTwoInRowMoves(board)).toEqual(['middleRight', 'center']);
+        expect(computer.availableTwoInRowMoves(board)).toContain('middleRight');
       });
 
       it('finds horizontal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('topLeft', x);
         computer.move(board);
-        expect(computer.availableTwoInRowMoves(board)).toEqual(['topCenter', 'topRight']);
+        expect(computer.availableTwoInRowMoves(board)).toContain('topRight');
+      });
+
+      it('finds vertical moves that make two in a row', function () {
+        var board = new Board();
+        board.setMarker('topLeft', x);
+        computer.move(board);
+        expect(computer.availableTwoInRowMoves(board)).toContain('middleLeft');
+        expect(computer.availableTwoInRowMoves(board).length).toEqual(4);
+
       });
       
     });

@@ -51,7 +51,8 @@ Computer.prototype.neighborDirectionData = function(board){
       }
     }
   }
-  // console.log(data)
+  
+  console.log(data)
   return data;
 }
 
@@ -59,15 +60,15 @@ Computer.prototype.availableTwoInRowMoves = function(board){
   var result = [];
   var neighborsData = this. neighborDirectionData(board);
   for(position in neighborsData){
-    console.log(position) 
     var pstn = neighborsData[position];
-    console.log(pstn.left, pstn.right)
     if(pstn.left.same + pstn.right.same == 1 && pstn.left.blank + pstn.right.blank == 1){
-      console.log("in")
+      result.push(position)
+    }
+    if(pstn.up.same + pstn.down.same == 1 && pstn.up.blank + pstn.down.blank == 1){
+      console.log(pstn)
       result.push(position)
     }
   }
-  console.log(result)
   return result;
 }
 

@@ -33,6 +33,7 @@ function Board(existingBoardPositions) {
                                   up : "topLeft", 
                                   upRight : "topCenter",
                                   right : "center",
+                                  down : "bottomRight",
                                 };
     this.positions.center.neighbors = {
                                   left : "middleLeft",
