@@ -68,6 +68,10 @@ Computer.prototype.availableTwoInRowMoves = function(board){
       console.log(pstn)
       result.push(position)
     }
+    if(pstn.upLeft.same + pstn.downRight.same == 1 && pstn.upLeft.blank + pstn.downRight.blank == 1){
+      console.log(pstn)
+      result.push(position)
+    }
   }
   return result;
 }

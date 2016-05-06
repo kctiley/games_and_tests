@@ -79,6 +79,7 @@ describe('Computer', function () {
         board.setMarker('topLeft', x);
         computer.move(board);
         expect(computer.availableTwoInRowMoves(board)).toContain('topRight');
+        expect(computer.availableTwoInRowMoves(board)).toContain('topCenter');
       });
 
       it('finds vertical moves that make two in a row', function () {
@@ -86,11 +87,29 @@ describe('Computer', function () {
         board.setMarker('topLeft', x);
         computer.move(board);
         expect(computer.availableTwoInRowMoves(board)).toContain('middleLeft');
-        expect(computer.availableTwoInRowMoves(board).length).toEqual(4);
+        expect(computer.availableTwoInRowMoves(board)).toContain('bottomLeft');
+      });
 
+      it('finds diagonal moves that make two in a row', function () {
+        var board = new Board();
+        board.setMarker('topLeft', x);
+        computer.move(board);
+        expect(computer.availableTwoInRowMoves(board)).toContain('center');
+        expect(computer.availableTwoInRowMoves(board)).toContain('bottomLeft');
       });
       
     });
+
+    // describe('finds available moves that make two in a row', function () {
+    //   it('initially has no moves that block a fork', function () {
+    //     var board = new Board();
+    //     board.setMarker('topLeft', o);
+    //     board.setMarker('bottomCenter', o);
+    //     computer.move(board);
+    //     expect(computer.availableTwoInRowMoves(board)).toEqual([]);
+    //   });
+
+    // });
 
   });
 
