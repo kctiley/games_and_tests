@@ -216,6 +216,21 @@ describe('Computer', function () {
 
     });
 
+
+    describe('filters out moves that would force a user fork move', function () {
+
+      it('finds corner moves and filters out moves that force user fork move', function () {
+        var board = new Board();
+        board.setMarker('center', x);
+        board.setMarker('bottomCenter', o);
+        board.setMarker('topRight', o);
+
+        expect(computer.doesNotForceFork(computer.availableCorners(board), board)).toContain('bottomLeft');
+        expect(computer.doesNotForceFork(computer.availableCorners(board), board)).toContain('bottomRight');
+      });
+
+    });
+
   });
 
 });

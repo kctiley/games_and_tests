@@ -1,6 +1,7 @@
 var x = " X ";
 var o  = " O ";
 var blank = "[ ]";
+var Board = require('../src/board');
 
 function Computer (){
   this.selection = null;
@@ -141,6 +142,7 @@ Computer.prototype.availableTwoInRowMoves = function(board, playerMarker){
 }
 
 
+
 Computer.prototype.availableCenter = function(board){
   var center = ['center'];
 
@@ -157,6 +159,29 @@ Computer.prototype.availableSides = function(board){
   return this.findAvailable(board, sidePositions);
 }
 
+Computer.prototype.doesNotForceFork = function(filterPositions, board){
+  var computer1 = this;
+  var result = [];
+  var board = board;
+  filterPositions.forEach(function(filterPosition){
+    var tempBoard = new Board(board.positions);
+    tempBoard.setMarker(filterPosition, x);
+    var winMoves = computer1.computerWinMoves(tempBoard);
+    var userForkMoves = computer1.userForkMoves(tempBoard);
+    if(winMoves.length > 0){ 
+      winMoves.forEach(function(winMovePosition){
+        if(userForkMoves.indexOf(winMovePosition) == -1){
+          result.push(filterPosition);
+        }
+      })
+    }else{
+      result.push(filterPosition);
+    }
+
+  })
+  return result;
+}
+
 Computer.prototype.move = function(board){
   // this.userWinMoves(board);
   // this.userForkMoves(board, playerMarker);
@@ -165,5 +190,6 @@ Computer.prototype.move = function(board){
   // this.availableCorners(board);
   // this.availableSides(board);
 }
+
 
 module.exports = Computer;

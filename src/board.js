@@ -1,7 +1,6 @@
 function Board(existingBoardPositions) {
   var blank = "[ ]";
-
-  if(!existingBoardPositions){
+// changing board creation
     this.positions = {
                   topLeft : {marker:blank},
                   topCenter : {marker:blank},
@@ -79,9 +78,12 @@ function Board(existingBoardPositions) {
         }
       })
     }                               
-  }
-  else{
-    this.positions = existingBoardPositions;
+  if(existingBoardPositions){
+    for (position in existingBoardPositions){
+      if(position.marker != blank){
+        this.positions[position].marker = existingBoardPositions[position].marker;
+      }
+    }
   }
 
 }
