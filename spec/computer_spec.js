@@ -231,12 +231,13 @@ describe('Computer', function () {
 
       it('finds side moves and filters out moves that force user fork move', function () {
         var board = new Board();
-        board.setMarker('center', x);
-        board.setMarker('bottomCenter', o);
-        board.setMarker('topRight', o);
+        board.setMarker('topRight', x);
+        board.setMarker('bottomRight', o);
+        board.setMarker('bottomLeft', o);
 
-        expect(computer.doesNotForceFork(computer.availableCorners(board), board)).toContain('bottomLeft');
-        expect(computer.doesNotForceFork(computer.availableCorners(board), board)).toContain('bottomRight');
+        expect(computer.doesNotForceFork(computer.availableSides(board), board)).toContain('middleLeft');
+        expect(computer.doesNotForceFork(computer.availableSides(board), board)).toContain('middleRight');
+        expect(computer.doesNotForceFork(computer.availableSides(board), board)).toContain('bottomCenter');
       });
     });
 
