@@ -5,8 +5,8 @@ var Board = require('../src/board');
 
 function Game (){
   this.lastMove = {player : null, position : null};
-  this.nextPlayer = o;
-  this.status = "next";
+  this.currentPlayer = o;
+  // this.status = "next";
   this.board = new Board();
 }
 
@@ -77,13 +77,13 @@ Game.prototype.checkForWinner = function(){
   check(o);
   return winner;
 }
-Game.prototype.checkForTie = function(){
-  if(this.availablePositions(this.board).length == 0 && this.status != "winner"){
+Game.prototype.areAllPos = function(){
+  if(this.availablePositions(this.board).length == 0){
     return true;
   }
 }
 Game.prototype.moveIsValid = function(playerMarker, position){
-  return this.availablePositions(this.board).indexOf(position) == -1  || this.nextPlayer != playerMarker ? false : true;
+  return this.availablePositions(this.board).indexOf(position) == -1  || this.currentPlayer != playerMarker ? false : true;
 }
 Game.prototype.setMove = function(playerMarker, position){
   if(this.moveIsValid(playerMarker, position)){
@@ -97,13 +97,19 @@ Game.prototype.setMove = function(playerMarker, position){
 }
 
 Game.prototype.updateGame = function(){
-  if(this.availablePositions(this.board) && this.status != "winner"){
+  if(this.checkForWinner()){
+    this.message = this.checkForWinner();
+  }
+  else if(this.availablePositions(this.board).length == 0){
+    this.message = "Tie";
+  }
+  else{
     this.nextPlayerGo();
   }
 }
 
 Game.prototype.nextPlayerGo = function(){
-  this.lastMove.player == o ? this.nextPlayer = x : this.nextPlayer = o;
+  this.lastMove.player == o ? this.currentPlayer = x : this.currentPlayer = o;
 }
 
 

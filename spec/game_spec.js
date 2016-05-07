@@ -18,10 +18,6 @@ var blank = "[ ]";
         expect(game.lastMove).toEqual({player : null, position : null});
       });
 
-      it('should have initial status of next', function () {
-        expect(game.status).toEqual("next");
-      });
-
     });
 
     describe('methods', function () {
@@ -67,21 +63,6 @@ var blank = "[ ]";
         expect(game.checkForWinner(game.board)).toEqual(o);
       });
 
-      it('should check for a win for a tie', function () {
-        var allPositions = [];
-        game.board.positions.topCenter.marker = x;
-        game.board.positions.center.marker = x;
-        game.board.positions.bottomCenter.marker = o;
-        game.board.positions.topLeft.marker = o;
-        game.board.positions.topRight.marker = x;
-        game.board.positions.middleLeft.marker = x;
-        game.board.positions.middleRight.marker = o;
-        game.board.positions.bottomRight.marker = x;
-        game.board.positions.bottomLeft.marker = o;
-
-        expect(game.checkForTie(game.board)).toEqual(true);
-      });
-
       it('should set last move data', function () {
         game.setMove(o, "topLeft");
         game.setMove(x, "center");
@@ -94,13 +75,13 @@ var blank = "[ ]";
         // spyOn(game, 'promptUser');
 
         // expect(game.promptUser).toHaveBeenCalled();
-        expect(game.nextPlayer).toEqual(o);
+        expect(game.currentPlayer).toEqual(o);
       })
       
       it('should set current player to x if last player was o', function () {
         game.setMove(o, "bottomCenter");
 
-        expect(game.nextPlayer).toEqual(x);
+        expect(game.currentPlayer).toEqual(x);
       })
 
       it('should determine if move is valid', function () {
@@ -120,7 +101,7 @@ var blank = "[ ]";
         game.setMove(x,"bottomCenter");
         game.setMove(o, "bottomCenter");
 
-        expect(game.nextPlayer).toEqual(o);
+        expect(game.currentPlayer).toEqual(o);
       })
 
 
