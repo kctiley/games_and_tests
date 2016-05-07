@@ -63,21 +63,18 @@ describe('Computer', function () {
     describe('finds available moves that make two in a row', function () {
       it('initially has no moves that make two in a row', function () {
         var board = new Board();
-        computer.move(board);
         expect(computer.availableTwoInRowMoves(board, x)).toEqual([]);
       });
 
       it('finds horizontal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('middleLeft', x);
-        computer.move(board);
         expect(computer.availableTwoInRowMoves(board, x)).toContain('middleRight');
       });
 
       it('finds horizontal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('topLeft', x);
-        computer.move(board);
         expect(computer.availableTwoInRowMoves(board, x)).toContain('topRight');
         expect(computer.availableTwoInRowMoves(board, x)).toContain('topCenter');
       });
@@ -85,7 +82,6 @@ describe('Computer', function () {
       it('finds vertical moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('topLeft', x);
-        computer.move(board);
         expect(computer.availableTwoInRowMoves(board, x)).toContain('middleLeft');
         expect(computer.availableTwoInRowMoves(board, x)).toContain('bottomLeft');
       });
@@ -93,7 +89,6 @@ describe('Computer', function () {
       it('finds diagonal moves that make two in a row', function () {
         var board = new Board();
         board.setMarker('topLeft', x);
-        computer.move(board);
         expect(computer.availableTwoInRowMoves(board, x)).toContain('center');
         expect(computer.availableTwoInRowMoves(board, x)).toContain('bottomLeft');
       });
@@ -104,7 +99,6 @@ describe('Computer', function () {
 
       it('finds moves that block a fork', function () {
         var board = new Board();
-        computer.move(board);
         board.setMarker('topLeft', o);
         board.setMarker('bottomRight', o);
 
@@ -114,7 +108,6 @@ describe('Computer', function () {
 
       it('finds moves that block user fork', function () {
         var board = new Board();
-        computer.move(board);
         board.setMarker('topCenter', o);
         board.setMarker('bottomRight', o);
 
@@ -130,7 +123,6 @@ describe('Computer', function () {
 
       it('finds available moves that create computer fork', function () {
         var board = new Board();
-        computer.move(board);
         board.setMarker('topLeft', x);
         board.setMarker('bottomRight', x);
 
@@ -140,7 +132,6 @@ describe('Computer', function () {
 
       it('finds available moves that create computer fork', function () {
         var board = new Board();
-        computer.move(board);
         board.setMarker('bottomLeft', x);
         board.setMarker('topRight', x);
 
@@ -150,7 +141,6 @@ describe('Computer', function () {
 
       it('finds available moves that create computer fork', function () {
         var board = new Board();
-        computer.move(board);
         board.setMarker('topCenter', x);
         board.setMarker('bottomRight', x);
 
@@ -158,6 +148,34 @@ describe('Computer', function () {
         expect(computer.computerForkMoves(board)).toContain('topRight');
         expect(computer.computerForkMoves(board)).toContain('topLeft');
         expect(computer.computerForkMoves(board)).toContain('center');
+      });
+
+    });
+
+    describe('finds available moves that block user win moves', function () {
+
+        it('finds user win moves in middle of diagonal', function () {
+          var board = new Board();
+          board.setMarker('topLeft', o);
+          board.setMarker('bottomRight', o);
+
+          expect(computer.userWinMoves(board)).toContain('center');
+        });
+
+      it('finds user win moves middle of horizontal', function () {
+        var board = new Board();
+        board.setMarker('middleLeft', o);
+        board.setMarker('middleRight', o);
+
+        expect(computer.userWinMoves(board)).toContain('center');
+      });
+
+      it('finds user win moves left side of horizontal', function () {
+        var board = new Board();
+        board.setMarker('center', o);
+        board.setMarker('middleRight', o);
+
+        expect(computer.userWinMoves(board)).toContain('middleLeft');
       });
 
     });
