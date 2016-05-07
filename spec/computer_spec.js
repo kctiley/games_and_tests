@@ -180,6 +180,42 @@ describe('Computer', function () {
 
     });
 
+    describe('finds available computer win moves', function () {
+
+      it('finds computer win moves in middle of diagonal row', function () {
+        var board = new Board();
+        board.setMarker('topLeft', x);
+        board.setMarker('bottomRight', x);
+
+        expect(computer.computerWinMoves(board)).toContain('center');
+      });
+
+      it('finds computer win moves middle of horizontal row', function () {
+        var board = new Board();
+        board.setMarker('middleLeft', x);
+        board.setMarker('middleRight', x);
+
+        expect(computer.computerWinMoves(board)).toContain('center');
+      });
+
+      it('finds computer win moves left side of horizontal row', function () {
+        var board = new Board();
+        board.setMarker('center', x);
+        board.setMarker('middleRight', x);
+
+        expect(computer.computerWinMoves(board)).toContain('middleLeft');
+      });
+
+      it('finds computer win moves top of vertical row', function () {
+        var board = new Board();
+        board.setMarker('center', x);
+        board.setMarker('bottomCenter', x);
+
+        expect(computer.computerWinMoves(board)).toContain('topCenter');
+      });
+
+    });
+
   });
 
 });

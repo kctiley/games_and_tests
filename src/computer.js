@@ -50,6 +50,29 @@ Computer.prototype.neighborDirectionData = function(board, playerMarker){
   return data;
 }
 
+Computer.prototype.computerWinMoves = function(board){
+  var result = [];
+  var availablePositions = this.neighborDirectionData(board, x);
+  for (position in availablePositions){
+    var pstn = availablePositions[position]
+    if(pstn){
+      if(pstn.left.same + pstn.right.same == 2){
+        result.push(position)
+      }
+      if(pstn.up.same + pstn.down.same == 2){
+        result.push(position)
+      }
+      if(pstn.upLeft.same + pstn.downRight.same == 2){
+        result.push(position)
+      }
+      if(pstn.upRight.same + pstn.downLeft.same == 2){
+        result.push(position)
+      }
+    }
+  }
+  return result;
+}
+
 Computer.prototype.userWinMoves = function(board){
   var result = [];
   var availablePositions = this.neighborDirectionData(board, o);
