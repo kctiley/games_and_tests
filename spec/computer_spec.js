@@ -229,6 +229,34 @@ describe('Computer', function () {
         expect(computer.doesNotForceFork(computer.availableCorners(board), board)).toContain('bottomRight');
       });
 
+      it('finds side moves and filters out moves that force user fork move', function () {
+        var board = new Board();
+        board.setMarker('center', x);
+        board.setMarker('bottomCenter', o);
+        board.setMarker('topRight', o);
+
+        expect(computer.doesNotForceFork(computer.availableCorners(board), board)).toContain('bottomLeft');
+        expect(computer.doesNotForceFork(computer.availableCorners(board), board)).toContain('bottomRight');
+      });
+    });
+
+    describe('finds opposite corner move if user marked center on second move', function () {
+
+      it('finds bottomRight corner if topLeft was first move by computer and user move center second move', function () {
+        var board = new Board();
+        board.setMarker('topLeft', x);
+        board.setMarker('center', o);
+
+        expect(computer.oppositeCorner(board)).toContain('bottomRight');
+      });
+
+      it('finds topRight corner if bottomLeft was first move by computer and user move center second move', function () {
+        var board = new Board();
+        board.setMarker('bottomLeft', x);
+        board.setMarker('center', o);
+
+        expect(computer.oppositeCorner(board)).toContain('topRight');
+      });
     });
 
   });

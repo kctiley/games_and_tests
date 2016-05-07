@@ -141,13 +141,31 @@ Computer.prototype.availableTwoInRowMoves = function(board, playerMarker){
   return result;
 }
 
-
-
 Computer.prototype.availableCenter = function(board){
-  var center = ['center'];
-
-  return this.findAvailable(board, center);
+  return this.findAvailable(board, ['center']);
 }
+
+
+
+Computer.prototype.oppositeCorner = function(board){
+  var result = [];
+  var availablePositions = [];
+  for (position in board.positions){
+    if(board.positions[position].marker == blank){
+      availablePositions.push(position);
+    }
+  }
+  if(availablePositions.length == 7 && board.positions.center.marker == o){
+    if(board.positions.topLeft.marker == x){ result.push('bottomRight')}
+    if(board.positions.topRight.marker == x){ result.push('bottomLeft')}
+    if(board.positions.bottomRight.marker == x){ result.push('topLeft')}
+    if(board.positions.bottomLeft.marker == x){ result.push('topRight')}
+  }
+
+  return result;
+}
+
+
 
 Computer.prototype.availableCorners = function(board){
   var cornerPositions = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
@@ -183,6 +201,7 @@ Computer.prototype.doesNotForceFork = function(filterPositions, board){
 }
 
 Computer.prototype.move = function(board){
+  // this.computerWinMoves(board);
   // this.userWinMoves(board);
   // this.userForkMoves(board, playerMarker);
   // this.availableTwoInRowMoves(board);
