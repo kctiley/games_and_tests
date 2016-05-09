@@ -6,4 +6,4 @@ var Game = require('../src/game');
 var Computer = require('../src/computer');
 
 var game = new(Game);
-game.next();
+//start button click

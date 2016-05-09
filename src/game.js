@@ -77,18 +77,14 @@ Game.prototype.checkForWinner = function(){
   check(o);
   return winner;
 }
-Game.prototype.areAllPos = function(){
-  if(this.availablePositions(this.board).length == 0){
-    return true;
-  }
+
+Game.prototype.moveIsValid = function(player, position){
+  return this.availablePositions(this.board).indexOf(position) == -1  || this.currentPlayer != player ? false : true;
 }
-Game.prototype.moveIsValid = function(playerMarker, position){
-  return this.availablePositions(this.board).indexOf(position) == -1  || this.currentPlayer != playerMarker ? false : true;
-}
-Game.prototype.setMove = function(playerMarker, position){
-  if(this.moveIsValid(playerMarker, position)){
-    this.lastMove = {player : playerMarker, position : position};
-    this.board.positions[position].marker = playerMarker;
+Game.prototype.setMove = function(player, position){
+  if(this.moveIsValid(player, position)){
+    this.board.positions[position].marker = player;
+    this.lastMove = {player : player, position : position};
   }
   else{
     this.message("Invalid move")

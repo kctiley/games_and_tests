@@ -200,14 +200,30 @@ Computer.prototype.doesNotForceFork = function(filterPositions, board){
   return result;
 }
 
-Computer.prototype.move = function(board){
-  // this.computerWinMoves(board);
-  // this.userWinMoves(board);
-  // this.userForkMoves(board, playerMarker);
-  // this.availableTwoInRowMoves(board);
-  // this.availableCenter(board);
-  // this.availableCorners(board);
-  // this.availableSides(board);
+Computer.prototype.selectMove = function(board){
+  var result;
+  if(this.computerWinMoves(board).length > 0){
+    result = this.computerWinMoves(board)[0];
+  }
+  else if(this.userWinMoves(board).length > 0){
+    result = this.userWinMoves(board)[0];
+  }
+  else if(this.doesNotForceFork(this.availableTwoInRowMoves(board)).length > 0){
+    result = this.doesNotForceFork(this.availableTwoInRowMoves(board))[0];
+  }
+  else if(this.doesNotForceFork(this.userForkMoves(board)).length > 0){
+    result = this.doesNotForceFork(this.userForkMoves(board))[0];
+  }
+  else if(this.availableCenter(board).length > 0){
+    result = this.availableCenter(board)[0];
+  }
+  else if(this.doesNotForceFork(this.availableCorners(board)).length > 0){
+    result = this.doesNotForceFork(this.availableCorners(board))[0];
+  }
+  else if(this.doesNotForceFork(this.availableSides(board)).length > 0){result = this.doesNotForceFork(this.availableSides(board))[0];
+  }
+  else {console.log("not coded")}
+  return result;
 }
 
 
