@@ -4,13 +4,33 @@ var blank = "[ ]";
 
 function Game (){
   this.lastMove = {player : null, position : null};
+  this.currentPlayer = null;
+  this.status = "inActive";
+  this.board = new Board();
+  this.startButton = document.getElementById('start-button');
+}
+
+Game.prototype.start = function(){
+  this.startButton.style.display = "none";
   this.currentPlayer = o;
   this.status = "active";
+  
+  this.clearMessage();
   this.board = new Board();
+  this.updateBoard(); 
 }
 
 Game.prototype.message = function(message){
-  console.log(message)
+  console.log(message);
+  document.getElementById('message').style.display = "block";
+  document.getElementById('message').innerHTML = message;
+  document.getElementById('board-container').style.opacity = .15;
+}
+
+Game.prototype.clearMessage = function(){
+  document.getElementById('message').style.display = "none";
+  document.getElementById('message').innerHTML = "";
+  document.getElementById('board-container').style.opacity = 1.0;
 }
 
 Game.prototype.availablePositions = function(){
@@ -78,38 +98,40 @@ Game.prototype.checkForWinner = function(){
 }
 
 Game.prototype.moveIsValid = function(player, position){
-  return this.availablePositions(this.board).indexOf(position) == -1  || this.currentPlayer != player ? false : true;
+  return this.status == "inActive" || this.availablePositions(this.board).indexOf(position) == -1  || this.currentPlayer != player ? false : true;
 }
 Game.prototype.setMove = function(player, position){
   if(this.moveIsValid(player, position)){
     this.board.positions[position].marker = player;
     this.lastMove = {player : player, position : position};
   }
-  else{
-    this.message("Invalid move")
-  }
   this.updateGame();
 }
 
-Game.prototype.showBoard = function(){
-    for(position in this.board.positions){
-      if(this.board.positions[position].marker !== blank){
-        var element = document.getElementById(position);
-        element.innerHTML = this.board.positions[position].marker;
-      }
+Game.prototype.updateBoard = function(){
+  for(position in this.board.positions){
+    var element = document.getElementById(position);
+    if(this.board.positions[position].marker !== blank){
+      element.innerHTML = this.board.positions[position].marker;
     }
+    else{
+      element.innerHTML = "";
+    }
+  }
 }
 
 Game.prototype.updateGame = function(){
-  this.showBoard()
+  this.updateBoard()
   if(this.checkForWinner()){
-    this.message = this.checkForWinner();
+    var winner = this.checkForWinner();
+    this.message("Winner is " + winner + "!!");
     this.status = "inActive";
-    console.log(this.message)
+    this.startButton.style.display = "inline-block";
   }
   else if(this.availablePositions(this.board).length == 0){
-    this.message = "Tie";
+    this.message("Tie.");
     this.status = "inActive";
+    this.startButton.style.display = "inline-block";
   }
   else{
     this.nextPlayerGo();
@@ -452,7 +474,7 @@ Board.prototype.setMarker = function(position, playerMarker){
 var game = new Game();
 var computerPlayer = new Computer();
 setInterval(function(){ 
-  if(game.status != "inActive"){
+  if(game.status != "inActive" && game.currentPlayer == x){
   game.setMove(x, computerPlayer.selectMove(game.board))};}, 1000);
 
 
